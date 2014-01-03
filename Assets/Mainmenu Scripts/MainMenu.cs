@@ -7,7 +7,8 @@ public class MainMenu : MonoBehaviour {
 	new public GUIStyle Buttonstyle;
 	
 	//screen width offset for gui elements
-	new int MenuoffSetX = 0;
+	new float MenuoffSetX = 0;
+	new float Targetval;
 	
 	
 	//GUI Texture indicators of sound and music on/off
@@ -26,9 +27,11 @@ public class MainMenu : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-	
+	MenuoffSetX = iTween.FloatUpdate(MenuoffSetX, Targetval, 3);
 	}
 	
+	
+	// all GUI elements
 	void OnGUI() {
 		// the three main buttons on the menu
 		if (GUI.Button (new Rect((Screen.width/1.8f+MenuoffSetX),Screen.height/5,Screen.width/3,Screen.height/7), "Play",Buttonstyle)){
@@ -37,11 +40,11 @@ public class MainMenu : MonoBehaviour {
 		}
 		
 		if (GUI.Button (new Rect((Screen.width/1.8f+MenuoffSetX),Screen.height/2.3f,Screen.width/3,Screen.height/7), "Options",Buttonstyle)){
-			MenuoffSetX = Screen.width;
+			Targetval = Screen.width;
 		}
 		
 		if (GUI.Button (new Rect((Screen.width/1.8f+MenuoffSetX),Screen.height/1.5f,Screen.width/3,Screen.height/7), "Credits",Buttonstyle)){
-			MenuoffSetX = -Screen.width;	
+			Targetval = -Screen.width;	
 		}
 		
 		// GUI elements for the OPTIONS screen
@@ -60,13 +63,24 @@ public class MainMenu : MonoBehaviour {
 		}
 		
 		if (GUI.Button(new Rect((Screen.width + Screen.width/2) - MenuoffSetX, Screen.height/1.2f, Screen.width/8,Screen.height/8),"Back", Buttonstyle)){
-			MenuoffSetX = 0;
+			Targetval = 0;
 		}
 		
 		GUI.Box(new Rect((Screen.width + Screen.width/1.3f) - MenuoffSetX, Screen.height/4,Screen.width/6,Screen.height/6),Musicindi);
    
 		GUI.Box(new Rect((Screen.width + Screen.width/1.3f) - MenuoffSetX, Screen.height/2,Screen.width/6,Screen.height/6),Soundindi);
+		
+		//GUI elements for credits screen 
+
+	
+		GUI.Box(new Rect((Screen.width/4 + Screen.width)+MenuoffSetX,Screen.height/4,Screen.width/2,Screen.height/2),"Zack & Thatcher and John");
+	
+		if (GUI.Button(new Rect((Screen.width/2 - Screen.width) - MenuoffSetX, Screen.height/1.2f, Screen.width/8,Screen.height/8),"Back", Buttonstyle)){
+			Targetval = 0;
+		}
 	}
+	
+
 	
 	void ChangeMusic(){
 	if(MusicisOn == true){
@@ -90,4 +104,13 @@ public class MainMenu : MonoBehaviour {
 	SoundifOn = true;
 		}
 	}
+	
+//	IEnumerator ChangeMenuOffSet(float Targetval){
+//		print (MenuoffSetX);
+//		
+//		MenuoffSetX = iTween.FloatUpdate(MenuoffSetX, Targetval, 3);
+//		yield return new WaitForSeconds(2);
+//			
+//	}
+	
 }
