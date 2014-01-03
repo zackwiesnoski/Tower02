@@ -11,8 +11,10 @@ public class MainMenu : MonoBehaviour {
 	
 	
 	//GUI Texture indicators of sound and music on/off
-	new public GUITexture Musicindi;
-	new public GUITexture Soundindi;
+	new public Texture Musicindi;
+	new public Texture Soundindi;
+	new bool MusicisOn;
+	new bool SoundifOn;
 	
 	
 	// Use this for initialization
@@ -45,23 +47,47 @@ public class MainMenu : MonoBehaviour {
 		// GUI elements for the OPTIONS screen
 		
 		if (GUI.Button(new Rect((Screen.width + Screen.width/5) - MenuoffSetX, Screen.height/4, Screen.width/6,Screen.height/6),"Sound", Buttonstyle)){
-			if(AudioListener.volume == 1){
-			AudioListener.volume = 0;
-			}
-				else
-			{
-			AudioListener.volume = 1;		
-			}
+		
+			ChangeMusic();
 			
-				
 		}
 		
 		
-		GUI.Button(new Rect((Screen.width + Screen.width/5) - MenuoffSetX, Screen.height/2, Screen.width/6,Screen.height/6),"Music", Buttonstyle);
+		if (GUI.Button(new Rect((Screen.width + Screen.width/5) - MenuoffSetX, Screen.height/2, Screen.width/6,Screen.height/6),"Music", Buttonstyle)){
+		
+			ChangeSound();
+			
+		}
 		
 		if (GUI.Button(new Rect((Screen.width + Screen.width/2) - MenuoffSetX, Screen.height/1.2f, Screen.width/8,Screen.height/8),"Back", Buttonstyle)){
 			MenuoffSetX = 0;
 		}
 		
-    }
+		GUI.Box(new Rect((Screen.width + Screen.width/1.3f) - MenuoffSetX, Screen.height/4,Screen.width/6,Screen.height/6),Musicindi);
+   
+		GUI.Box(new Rect((Screen.width + Screen.width/1.3f) - MenuoffSetX, Screen.height/2,Screen.width/6,Screen.height/6),Soundindi);
+	}
+	
+	void ChangeMusic(){
+	if(MusicisOn == true){
+	Musicindi = Resources.Load("X") as Texture;
+	MusicisOn = false;
+		}
+	else{
+	Musicindi = Resources.Load("check") as Texture;		
+	MusicisOn = true;
+		}
+	}
+	
+	
+	void ChangeSound(){
+	if(SoundifOn == true){
+	Soundindi = Resources.Load("X") as Texture;
+	SoundifOn = false;
+		}
+	else{
+	Soundindi = Resources.Load("check") as Texture;		
+	SoundifOn = true;
+		}
+	}
 }
