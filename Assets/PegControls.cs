@@ -7,8 +7,8 @@ public class PegControls : MonoBehaviour {
 
 	public Stack<DiskControls> disks = new Stack<DiskControls> ();
 	public bool start, destination;
-	public static int numDisks = 5;
-	static PegControls selected = null; 
+	public static int numDisks = 3;
+	static PegControls selected = null;
 	public Transform diskFab;
 
 	void Start () {
@@ -48,7 +48,7 @@ public class PegControls : MonoBehaviour {
 		}
 	}
 
-	//Moves a disk from one peg to another.
+	//Moves a disk from selected peg to this one.
 	void Transfer() {
 		if (selected.disks.Count > 0 && selected != this) {
 			print ("transfer!");
@@ -57,6 +57,9 @@ public class PegControls : MonoBehaviour {
 				disks.Push (moved);
 				moved.transform.parent = transform;
 				moved.transform.position = new Vector3(transform.position.x,disks.Count-1.5f,0);
+				if(disks.Count == numDisks) {
+					Application.LoadLevel(Application.loadedLevel);
+				}
 			}
 		}
 	}
