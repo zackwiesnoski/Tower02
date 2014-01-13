@@ -49,6 +49,9 @@
      <Compile Include="Assets\DiskControls.cs" />
      <Compile Include="Assets\Mainmenu Scripts\MainMenu.cs" />
      <Compile Include="Assets\PegControls.cs" />
+     <Compile Include="Assets\SoundManager.cs" />
+     <Compile Include="Assets\SoundTest2.cs" />
+     <Compile Include="Assets\SoundTestScipt.cs" />
      <Compile Include="Assets\iTween\Plugins\iTween.cs" />
      <Compile Include="Assets\iTween\Sample\MoveSample.cs" />
      <Compile Include="Assets\iTween\Sample\RotateSample.cs" />
