@@ -36,17 +36,25 @@ public class MainMenu : MonoBehaviour {
 		// the three main buttons on the menu
 		if (GUI.Button (new Rect((Screen.width/1.8f+MenuoffSetX),Screen.height/5,Screen.width/3,Screen.height/7), "Play",Buttonstyle)){
 		
+		SoundManager.PlayMusic((Resources.Load("Sounds/pop")as AudioClip));
 		Application.LoadLevel("firstScene");
+			
 		}
 		
-		if (GUI.Button (new Rect((Screen.width/1.8f+MenuoffSetX),Screen.height/2.3f,Screen.width/3,Screen.height/7), "Options",Buttonstyle)){
+		if (GUI.Button (new Rect((Screen.width/1.8f+MenuoffSetX),Screen.height/2.6f,Screen.width/3,Screen.height/7), "Options",Buttonstyle)){
 			Targetval = Screen.width;
 			StartCoroutine (SoundManager.PlaySound(Resources.Load("Sounds/pop")as AudioClip));
 		}
 		
-		if (GUI.Button (new Rect((Screen.width/1.8f+MenuoffSetX),Screen.height/1.5f,Screen.width/3,Screen.height/7), "Credits",Buttonstyle)){
+		if (GUI.Button (new Rect((Screen.width/1.8f+MenuoffSetX),Screen.height/1.7f,Screen.width/3,Screen.height/7), "Credits",Buttonstyle)){
 			Targetval = -Screen.width;	
 			StartCoroutine (SoundManager.PlaySound(Resources.Load("Sounds/pop")as AudioClip));
+		}
+		
+		if (GUI.Button (new Rect((Screen.width/1.8f+MenuoffSetX),Screen.height/1.3f,Screen.width/3,Screen.height/7), "More Games",Buttonstyle)){
+	
+		Application.OpenURL("www.google.com");
+			
 		}
 		
 		// GUI elements for the OPTIONS screen

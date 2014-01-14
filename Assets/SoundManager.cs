@@ -6,7 +6,7 @@ public class SoundManager : MonoBehaviour {
 	
 	// How to play a sound:
 	
-	// example: SoundManager.PlaySound(Resources.Load("directory under rescources")as AudioClip);
+	// example: StartCoroutine (SoundManager.PlaySound(Resources.Load("Sounds/pop")as AudioClip));
 	
 	
 	
@@ -63,14 +63,14 @@ public class SoundManager : MonoBehaviour {
 		
 	}
 	
-//	public static void PlayMusic(AudioClip clip){
-//		
-//		print ("Music");
-//		Aud.clip= clip;
-//		Aud.loop = true;
-//		Aud.Play();
-//		
-//	}
+	public static void PlayMusic(AudioClip clip){
+		
+		print ("Music");
+		Aud.clip= clip;
+		Aud.loop=true;
+		Aud.Play();
+		
+	}
 
 	
 }
