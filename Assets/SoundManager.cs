@@ -63,10 +63,10 @@ public class SoundManager : MonoBehaviour {
 		
 	}
 	
-	public static void PlayMusic(AudioClip clip){
+	public static void PlayMusic(AudioClip thisclip){
 		
-		print ("Music");
-		Aud.clip= clip;
+		print (thisclip);
+		Aud.clip = thisclip;
 		Aud.loop=true;
 		Aud.Play();
 		

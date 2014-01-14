@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\DiskControls.cs" />
+     <Compile Include="Assets\IngameMenu.cs" />
+     <Compile Include="Assets\Mainmenu Scripts\Init.cs" />
      <Compile Include="Assets\Mainmenu Scripts\MainMenu.cs" />
      <Compile Include="Assets\PegControls.cs" />
      <Compile Include="Assets\SoundManager.cs" />
