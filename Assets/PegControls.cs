@@ -5,62 +5,50 @@ using System.Collections.Generic;
 public class PegControls : MonoBehaviour {
 
 
-	public Stack<DiskControls> disks = new Stack<DiskControls> ();
-	public bool start, destination;
-	public static int numDisks = 3;
-	static PegControls selected = null;
-	public Transform diskFab;
+	public int numDisks = 5; //number of disks per tower
+	public int numPegs = 3; //number of pegs
+	public static int numTowers = 1; // number of towers
+	Peg selected = null; //the currently selected peg
+	public Transform pegFab; //prefabs for instantiating pegs
 
-	void Start () {
-		if (start) {
-			for(int i = 0; i < numDisks; i++) {
-				DiskControls newDisk  = ((Transform) Instantiate(diskFab, new Vector3(transform.position.x,i - 0.5f,0), Quaternion.identity)).GetComponent<DiskControls>();
-				newDisk.setSize(numDisks+1 - i);
-				disks.Push(newDisk);
+	void Start() {
+		InitializeGame ();
+	}
+
+	void InitializeGame() {
+
+		for (int i = 0; i < numPegs; i++) {
+			Peg newPeg  = ((Transform) Instantiate(pegFab, new Vector3(i*10 - 10, 4,0), Quaternion.identity)).GetComponent<Peg>();
+			newPeg.transform.parent = this.transform;
+			newPeg.numDisks = numDisks;
+			if(i < numTowers) {
+				newPeg.MakeDisks();
+				newPeg.startingPeg = true;
 			}
 		}
-		foreach (DiskControls dc in gameObject.GetComponentsInChildren<DiskControls>()) {
-			disks.Push(dc);
-			print (disks.Count);
-
-		}
 	}
 
-	void Select() {
-		selected = this;
-		transform.renderer.material.color = Color.green;
-	}
 
-	void DeSelect() {
-		selected = null;
-		transform.renderer.material.color = Color.gray;
-	}
-	void OnMouseDown() {
-		//if no tower has been selected and this peg is not empty, select this tower
-		if (selected == null) {
-			if(disks.Count > 0) {
-				Select();
-			}
-		//otherwise, transfer disk from selected peg
-		} else {
-			Transfer ();
-			selected.DeSelect ();
+	void DestroyDisks() {
+		foreach (Transform child in transform) {
+			//Destroy(child.gameObject);
+			DestroyObject(child.gameObject);
+
 		}
 	}
 
-	//Moves a disk from selected peg to this one.
-	void Transfer() {
-		if (selected.disks.Count > 0 && selected != this) {
-			print ("transfer!");
-			if (disks.Count == 0 || selected.disks.Peek ().getSize () < disks.Peek ().getSize ()) {
-				DiskControls moved = selected.disks.Pop ();
-				disks.Push (moved);
-				moved.transform.parent = transform;
-				moved.transform.position = new Vector3(transform.position.x,disks.Count-1.5f,0);
-				if(disks.Count == numDisks) {
-					Application.LoadLevel(Application.loadedLevel);
-				}
-			}
+	void OnGUI() {
+		GUI.Label (new Rect (Screen.width / 2 + 20, Screen.height / 4 - 30, 150, 40), "Number of Disks");
+		numDisks = Mathf.RoundToInt( GUI.HorizontalSlider (new Rect (Screen.width / 2, Screen.height / 4, 150, 40), numDisks, 1, 8));
+		GUI.Label (new Rect (Screen.width / 2 - 180, Screen.height / 4 - 30, 150, 40), "Number of Pegs");
+		numPegs = Mathf.RoundToInt( GUI.HorizontalSlider (new Rect (Screen.width / 2 - 200, Screen.height / 4, 150, 40), numPegs, 3, 9));
+		GUI.Label (new Rect (Screen.width / 2 - 380, Screen.height / 4 - 30, 150, 40), "Number of Towers");
+		numTowers = Mathf.RoundToInt( GUI.HorizontalSlider (new Rect (Screen.width / 2 -400,  Screen.height / 4, 150, 40), numTowers, 1, 3));
+
+		if (GUI.changed) {
+			Peg.completed = 0;
+			DestroyDisks();
+			InitializeGame ();
 		}
 	}
 }
