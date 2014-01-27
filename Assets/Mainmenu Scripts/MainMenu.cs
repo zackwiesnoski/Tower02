@@ -36,7 +36,7 @@ public class MainMenu : MonoBehaviour {
 		// the three main buttons on the menu
 		if (GUI.Button (new Rect((Screen.width/1.8f+MenuoffSetX),Screen.height/5,Screen.width/3,Screen.height/7), "Play",Buttonstyle)){
 		
-		SoundManager.PlayMusic((Resources.Load("Sounds/pop")as AudioClip));
+		//SoundManager.PlayMusic((Resources.Load("Sounds/pop")as AudioClip));
 		Application.LoadLevel("firstScene");
 			
 		}

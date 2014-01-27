@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
+
 public class PegControls : MonoBehaviour {
 
 
@@ -17,6 +19,7 @@ public class PegControls : MonoBehaviour {
 
 	void InitializeGame() {
 
+		Camera.main.transform.position = new Vector3(5*numPegs - 15, 10 + numPegs, -5*numPegs - 15);
 		for (int i = 0; i < numPegs; i++) {
 			Peg newPeg  = ((Transform) Instantiate(pegFab, new Vector3(i*10 - 10, 4,0), Quaternion.identity)).GetComponent<Peg>();
 			newPeg.transform.parent = this.transform;
@@ -24,6 +27,7 @@ public class PegControls : MonoBehaviour {
 			if(i < numTowers) {
 				newPeg.MakeDisks();
 				newPeg.startingPeg = true;
+				newPeg.renderer.material.color = Color.yellow;
 			}
 		}
 	}
@@ -38,14 +42,15 @@ public class PegControls : MonoBehaviour {
 	}
 
 	void OnGUI() {
-		GUI.Label (new Rect (Screen.width / 2 + 20, Screen.height / 4 - 30, 150, 40), "Number of Disks");
-		numDisks = Mathf.RoundToInt( GUI.HorizontalSlider (new Rect (Screen.width / 2, Screen.height / 4, 150, 40), numDisks, 1, 8));
-		GUI.Label (new Rect (Screen.width / 2 - 180, Screen.height / 4 - 30, 150, 40), "Number of Pegs");
-		numPegs = Mathf.RoundToInt( GUI.HorizontalSlider (new Rect (Screen.width / 2 - 200, Screen.height / 4, 150, 40), numPegs, 3, 9));
-		GUI.Label (new Rect (Screen.width / 2 - 380, Screen.height / 4 - 30, 150, 40), "Number of Towers");
-		numTowers = Mathf.RoundToInt( GUI.HorizontalSlider (new Rect (Screen.width / 2 -400,  Screen.height / 4, 150, 40), numTowers, 1, 3));
+		GUI.Label (new Rect (Screen.width / 2 + 150, Screen.height / 4 - 30, 150, 40), "Number of Disks");
+		numDisks = Mathf.RoundToInt( GUI.HorizontalSlider (new Rect (Screen.width / 2 + 150, Screen.height / 4, 100, 40), numDisks, 1, 8));
+		GUI.Label (new Rect (Screen.width / 2 - 250, Screen.height / 4 - 30, 150, 40), "Number of Towers");
+		numTowers = Mathf.RoundToInt( GUI.HorizontalSlider (new Rect (Screen.width / 2 -250,  Screen.height / 4, 100, 40), numTowers, 1, 3));
+		GUI.Label (new Rect (Screen.width / 2 - 50, Screen.height / 4 - 30, 150, 40), "Number of Pegs");
+		numPegs =  Mathf.Max(Mathf.RoundToInt( GUI.HorizontalSlider (new Rect (Screen.width / 2 - 50, Screen.height / 4, 100, 40), numPegs, 3, 9)), numTowers*2);
 
 		if (GUI.changed) {
+			print(numPegs);
 			Peg.completed = 0;
 			DestroyDisks();
 			InitializeGame ();

@@ -13,7 +13,7 @@ public class DiskControls : MonoBehaviour
 		
 		public void setSize(int newSize) {
 			size = newSize;
-		transform.localScale = new Vector3(newSize,transform.localScale.y,newSize);
+			transform.localScale = new Vector3(newSize,transform.localScale.y,newSize);
 		}
 		// Use this for initialization
 		void Start ()

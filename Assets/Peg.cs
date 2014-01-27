@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
-public class Peg : MonoBehaviour {
+public class Peg : MonoBehaviour
+{
 
 	public Stack<DiskControls> disks = new Stack<DiskControls> ();
 	public Transform diskFab; // prefab for instantiating disks
@@ -12,12 +12,12 @@ public class Peg : MonoBehaviour {
 	public int numDisks;
 	static public int completed = 0;
 
-
-	void OnMouseDown() {
+	void OnMouseDown ()
+	{
 		//if no tower has been selected and this peg is not empty, select this tower
 		if (selected == null) {
-			if(disks.Count > 0) {
-				Select();
+			if (disks.Count > 0) {
+				Select ();
 			}
 			//otherwise, transfer disk from selected peg
 		} else {
@@ -26,44 +26,52 @@ public class Peg : MonoBehaviour {
 		}
 	}
 
-	void Transfer() {
+	void Transfer ()
+	{
 		if (selected.disks.Count > 0 && selected != this) {
 			if (disks.Count == 0 || selected.disks.Peek ().getSize () < disks.Peek ().getSize ()) {
-				if(selected.disks.Count == numDisks && !selected.startingPeg) {
+				if (selected.disks.Count == numDisks && !selected.startingPeg) {
 					completed--;
 				}
 				DiskControls moved = selected.disks.Pop ();
 				disks.Push (moved);
 				moved.transform.parent = transform;
-				moved.transform.position = new Vector3(transform.position.x,disks.Count-1.5f,0);
-				if(disks.Count == numDisks && !startingPeg) {
+				moved.transform.position = new Vector3 (transform.position.x, disks.Count - 1.5f, 0);
+				if (disks.Count == numDisks && !startingPeg) {
 					completed++;
 				}
 				print (completed);
-				if(completed == PegControls.numTowers) {
+				if (completed == PegControls.numTowers) {
 					completed = 0;
-					Application.LoadLevel(Application.loadedLevel);
+					Application.LoadLevel (Application.loadedLevel);
 				}
 			}
 		}
 	}
 
-	public void Select() {
+	public void Select ()
+	{
 		selected = this;
 		transform.renderer.material.color = Color.green;
 	}
 
-	public void DeSelect() {
+	public void DeSelect ()
+	{
+		if (!startingPeg) {
+			transform.renderer.material.color = Color.white;
+		} else {
+			transform.renderer.material.color = Color.yellow;	
+		}
 		selected = null;
-		transform.renderer.material.color = Color.white;
 	}
 
-	public void MakeDisks() {
-		for(int i = 0; i < numDisks; i++) {
-			DiskControls newDisk  = ((Transform) Instantiate(diskFab, new Vector3(transform.position.x,i - 0.5f,0), Quaternion.identity)).GetComponent<DiskControls>();
+	public void MakeDisks ()
+	{
+		for (int i = 0; i < numDisks; i++) {
+			DiskControls newDisk = ((Transform)Instantiate (diskFab, new Vector3 (transform.position.x, i - 0.5f, 0), Quaternion.identity)).GetComponent<DiskControls> ();
 			newDisk.transform.parent = this.transform;
-			newDisk.setSize(numDisks+1 - i);
-			disks.Push(newDisk);
+			newDisk.setSize (numDisks + 1 - i);
+			disks.Push (newDisk);
 		}
 	}
 }
